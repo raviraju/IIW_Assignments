@@ -1,6 +1,3 @@
-# IIW_Assignments
-Assignments during Information Integration on Web Course of Fall-2016
-
 ## HW2 : Extract key information from unstructured text in webpages. 
 * Train a Conditional Random Field (CRF) classifier to extract the desired information 
 * Use the classifier on a large amount of unstructured text to extract desired meaningful information
