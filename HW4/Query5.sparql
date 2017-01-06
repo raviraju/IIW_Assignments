@@ -1,0 +1,20 @@
+prefix dbo: <http://dbpedia.org/ontology/>
+prefix dbp: <http://dbpedia.org/property/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?actor_name, ?birthDate
+WHERE {
+    ?artists rdf:type dbo:Artist;
+             rdfs:label ?name1;
+             dbo:birthDate ?birthDate1;
+             dbo:birthYear ?birthYear .
+	
+BIND(str(?birthDate1) as ?birthDate)
+FILTER( langmatches(lang(?name1),"en"))
+
+FILTER ( ?birthYear < "1800-01-01T00:00:00Z"^^xsd:dateTime )
+FILTER ( ?birthYear > "0031"^^xsd:gYear )
+
+BIND(str(?name1) as ?actor_name)
+FILTER ( regex(?actor_name, "David", "i") )
+}
+ORDER BY desc(?birthDate)

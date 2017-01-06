@@ -1,0 +1,20 @@
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix dbp: <http://dbpedia.org/property/>
+prefix dbo: <http://dbpedia.org/ontology/>
+prefix dbr: <http://dbpedia.org/resource/>
+SELECT * WHERE
+{
+	{
+    SELECT ?profession (COUNT(?people) as ?no_of_people)
+	WHERE{
+			?people dbp:occupation ?profession1;
+        			dbo:occupation ?occupation.
+			?profession1 rdfs:label ?professionLabel
+			FILTER(langmatches(lang(?professionLabel),"en"))
+			BIND(str(?professionLabel) as ?profession)
+	}
+	group by ?profession 
+  	ORDER by desc(?no_of_people)
+  	}
+  	FILTER (?profession in ("Actor", "Comedian", "Comics artist", "Dance", "Fashion", "List of humorists", "Painting" , "Photograph", "Sculpture"))  
+}	

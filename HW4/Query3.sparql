@@ -1,0 +1,5 @@
+prefix dbo: <http://dbpedia.org/ontology/>
+SELECT *
+WHERE{
+?subclass rdfs:subClassOf dbo:Artist
+}

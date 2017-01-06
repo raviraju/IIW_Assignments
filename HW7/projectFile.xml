@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <left-data-source class="cdc.impl.datasource.text.CSVDataSource" name="sourceA">
+        <params>
+            <param name="column-separator" value=","/>
+            <param name="source-name" value="sourceA"/>
+            <param name="input-file" value="C:\Users\Ravi\Desktop\USC\Courses_Sem3\Info_Integrate_Web\homework\hw7\submit\dataset1.csv"/>
+        </params>
+        <row-model>
+            <column column="attraction_in"
+                converter="cdc.datamodel.converters.DummyConverter" name="attraction_in">
+                <empty-values/>
+            </column>
+            <column column="no_of_attractions"
+                converter="cdc.datamodel.converters.DummyConverter" name="no_of_attractions">
+                <empty-values/>
+            </column>
+            <column column="no_of_reviews"
+                converter="cdc.datamodel.converters.DummyConverter" name="no_of_reviews">
+                <empty-values/>
+            </column>
+            <column column="url"
+                converter="cdc.datamodel.converters.DummyConverter" name="url">
+                <empty-values/>
+            </column>
+            <column column="reviewComment"
+                converter="cdc.datamodel.converters.DummyConverter" name="reviewComment">
+                <empty-values/>
+            </column>
+            <column column="activity_type"
+                converter="cdc.datamodel.converters.DummyConverter" name="activity_type">
+                <empty-values/>
+            </column>
+            <column column="rank"
+                converter="cdc.datamodel.converters.DummyConverter" name="rank">
+                <empty-values/>
+            </column>
+            <column column="max_rank"
+                converter="cdc.datamodel.converters.DummyConverter" name="max_rank">
+                <empty-values/>
+            </column>
+            <column column="attraction"
+                converter="cdc.datamodel.converters.DummyConverter" name="attraction">
+                <empty-values/>
+            </column>
+            <column column="contact_no"
+                converter="cdc.datamodel.converters.DummyConverter" name="contact_no">
+                <empty-values/>
+            </column>
+            <column column="knownFor"
+                converter="cdc.datamodel.converters.DummyConverter" name="knownFor">
+                <empty-values/>
+            </column>
+            <column column="address"
+                converter="cdc.datamodel.converters.DummyConverter" name="address">
+                <empty-values/>
+            </column>
+            <column column="pinCode"
+                converter="cdc.datamodel.converters.DummyConverter" name="pinCode">
+                <empty-values/>
+            </column>
+            <column column="imp_pinCode"
+                converter="cdc.datamodel.converters.DummyConverter" name="imp_pinCode">
+                <empty-values/>
+            </column>
+        </row-model>
+        <preprocessing>
+            <deduplication>
+                <deduplication-condition acceptance-level="100">
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="attraction_in" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="no_of_attractions" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="no_of_reviews" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="url" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="reviewComment" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="activity_type" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="rank" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="max_rank" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="attraction" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="contact_no" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="knownFor" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="address" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="pinCode" weight="7">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="imp_pinCode" weight="9">
+                        <params/>
+                    </condition>
+                </deduplication-condition>
+                <hashing-function columns="attraction_in" hash="equality"/>
+                <minus-file file="duplicates1.csv"/>
+            </deduplication>
+        </preprocessing>
+    </left-data-source>
+    <right-data-source class="cdc.impl.datasource.text.CSVDataSource" name="sourceB">
+        <params>
+            <param name="column-separator" value=","/>
+            <param name="source-name" value="sourceB"/>
+            <param name="input-file" value="C:\Users\Ravi\Desktop\USC\Courses_Sem3\Info_Integrate_Web\homework\hw7\submit\dataset2.csv"/>
+        </params>
+        <row-model>
+            <column column="name"
+                converter="cdc.datamodel.converters.DummyConverter" name="name">
+                <empty-values/>
+            </column>
+            <column column="locType"
+                converter="cdc.datamodel.converters.DummyConverter" name="locType">
+                <empty-values/>
+            </column>
+            <column column="address"
+                converter="cdc.datamodel.converters.DummyConverter" name="address">
+                <empty-values/>
+            </column>
+            <column column="pinCode"
+                converter="cdc.datamodel.converters.DummyConverter" name="pinCode">
+                <empty-values/>
+            </column>
+        </row-model>
+        <preprocessing>
+            <deduplication>
+                <deduplication-condition acceptance-level="100">
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="name" weight="25">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="locType" weight="25">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="address" weight="25">
+                        <params/>
+                    </condition>
+                    <condition
+                        class="cdc.impl.distance.EqualFieldsDistance"
+                        column="pinCode" weight="25">
+                        <params/>
+                    </condition>
+                </deduplication-condition>
+                <hashing-function columns="name" hash="equality"/>
+                <minus-file file="duplicates2.csv"/>
+            </deduplication>
+        </preprocessing>
+    </right-data-source>
+    <join class="cdc.impl.join.snm.SNMJoin_v1" summary-left="true" summary-right="true">
+        <params>
+            <param name="sort-order-right" value="attraction,attraction,imp_pinCode"/>
+            <param name="window" value="8"/>
+            <param name="sort-order-left" value="name,name,pinCode"/>
+        </params>
+        <join-condition class="cdc.impl.conditions.WeightedJoinCondition">
+            <params>
+                <param name="manual-review-level" value="80"/>
+                <param name="acceptance-level" value="71"/>
+            </params>
+            <condition class="cdc.impl.distance.EditDistance"
+                left-column="attraction" right-column="name" weight="30">
+                <params>
+                    <param name="math-level-end" value="0.3"/>
+                    <param name="match-level-start" value="0.1"/>
+                </params>
+            </condition>
+            <condition class="cdc.impl.distance.QGramDistance"
+                left-column="attraction" right-column="name" weight="30">
+                <params>
+                    <param name="q" value="3"/>
+                    <param name="disapprove-level" value="0.4"/>
+                    <param name="approve-level" value="0.2"/>
+                </params>
+            </condition>
+            <condition class="cdc.impl.distance.NumericDistance"
+                left-column="imp_pinCode" right-column="pinCode" weight="40">
+                <params>
+                    <param name="numeric-difference" value="0.0,0.0"/>
+                    <param name="percent-difference" value=""/>
+                    <param name="use-lineral-approximation" value="true"/>
+                </params>
+            </condition>
+        </join-condition>
+        <row-model>
+            <column name="attraction_in" source="sourceA"/>
+            <column name="no_of_attractions" source="sourceA"/>
+            <column name="no_of_reviews" source="sourceA"/>
+            <column name="url" source="sourceA"/>
+            <column name="reviewComment" source="sourceA"/>
+            <column name="activity_type" source="sourceA"/>
+            <column name="rank" source="sourceA"/>
+            <column name="max_rank" source="sourceA"/>
+            <column name="attraction" source="sourceA"/>
+            <column name="contact_no" source="sourceA"/>
+            <column name="knownFor" source="sourceA"/>
+            <column name="address" source="sourceA"/>
+            <column name="pinCode" source="sourceA"/>
+            <column name="imp_pinCode" source="sourceA"/>
+            <column name="name" source="sourceB"/>
+            <column name="locType" source="sourceB"/>
+            <column name="address" source="sourceB"/>
+            <column name="pinCode" source="sourceB"/>
+        </row-model>
+    </join>
+    <results-savers>
+        <results-saver class="cdc.impl.resultsavers.CSVFileSaver">
+            <params>
+                <param name="encoding" value="UTF-8"/>
+                <param name="output-file" value="C:\Users\Ravi\Desktop\USC\Courses_Sem3\Info_Integrate_Web\homework\hw7\submit\new_results.csv"/>
+            </params>
+        </results-saver>
+    </results-savers>
+</configuration>

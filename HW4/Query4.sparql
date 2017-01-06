@@ -1,0 +1,12 @@
+prefix dbp: <http://dbpedia.org/property/>
+prefix dbo: <http://dbpedia.org/ontology/>
+prefix dbr: <http://dbpedia.org/resource/>
+SELECT ?actors
+WHERE{
+dbr:A_Christmas_Tale dbp:starring ?stars.
+?stars rdfs:label ?name1;
+       rdf:type dbo:Actor
+FILTER(langmatches(lang(?name1),"en"))
+BIND(str(?name1) as ?actors)
+}
+ORDER BY ?actors

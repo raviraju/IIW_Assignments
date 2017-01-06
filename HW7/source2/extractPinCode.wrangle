@@ -1,0 +1,3 @@
+split col: column1 on: ',' limit: 2 quote: '\"'
+extract col: column4 on: `{zip}`
+rename col: column1 to: 'pinCode'

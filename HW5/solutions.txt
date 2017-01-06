@@ -1,0 +1,140 @@
+1. What’s the definition of mad_cow? Give both the formal definition and an explanation in your own words.
+    'mad cow' is owl:Thing which has comment "A mad cow is a cow that has been eating the brains of sheep."
+
+    'mad cow' -------is equivalent to -----> cow and (eats some (brain and (part_of some sheep)))
+    members of 'mad cow' class are those, which are members of 'cow' class and have restriction on :
+    'eats' property, 
+    	which should take value which is an instance of both classes:
+		'brain' 
+		and 
+		a class whose objectProperty part_of, which inturn should take value of an instance of 'sheep' class.
+################################################################################################################################
+2. What constraints does mad_cow inherit from its superclasses?
+    The following Constraints/Restriction on ObjectProperty eats, are inherited from superclasses. 
+        its value should be some own:Thing							(eats some owl:Thing)
+	its value should be only values such that:
+		a) instances of not an 'animal' class						(eats only (not (animal)))
+		b) instances of not a class, whose part_of property is an instance of animal	(eats only (not (part_of some animal)))
+################################################################################################################################
+3. Do you see any problem with that definition? Why? Start a reasoner. (The default Hermit 1.3.8 in the Reasoner tab is fine)
+    We have the following assertions:
+    a class : vegetarian-------is equivalent to -----> animal and (eats only (not (animal))) and (eats only (not (part_of some animal)))
+        i.e those animals which neither eat animals or parts of them
+    sheep SubClassOf animal
+
+    Using Reasoner, it can inferred that
+    cow   SubClassOf vegetarian
+
+    Since, 'mad cow' eat part_of some animal(sheep), they arent vegetarian. But as per their definition, it should be equivalent to cow class which are vegetarian. There exists a conflict. 
+    Hence 'mad cow' class is unsatisfiable, i.e no instances of mad cow class can exist
+################################################################################################################################
+4. What happened to the definition of mad_cow? Hint: check also the Class hierarchy (inferred) tab
+    Since 'mad cow' class was inferred to be unsatisfiable,it will be marked in red and shown as children of owl:Nothing(defined as the empty set. i.e equivalent to Bottom Concept in DL). Analogous to set theory : Empty/Null set is subSet of every Set, owl:Nothing is a subClass of owl:Thing(equivalent to Top Concept in DL).
+    Hence we have the following class hierarchy :
+    owl:Thing
+        owl:Nothing
+            'mad cow'
+################################################################################################################################
+5. What happened to the giraffe class? Why?
+Before Reasoner:(Asserted Axioms)
+	giraffe subClass of animal, and eats only leaf. 
+	Leaf is part of some tree. Tree is subClass of plant
+	cow is equivalent to vegetarian, which in turn is equivalent to animal.
+	
+	Part of Hierarchy before:
+		--giraffe
+	animal--|
+		--vegetarian---cow
+After Reasoner:(Inferred Axiom)
+	Using the axioms:
+	animal or (part_of some animal)   DisjointWith 		plant or (part_of some plant)
+	vegetarian 			  EquivalentTo 		animal and (eats only (not (animal))) and (eats only (not (part_of some animal)))
+	And knowing that giraffe eats leaf, which is part of Tree which is a plant
+	Reasoner can infer that giraffe is a vegetarian.
+
+	Hence Hierachy is transformed to:
+			     |--cow
+		vegetarian---
+		|	     |--giraffe
+	animal--|
+################################################################################################################################
+6. List all the dog and cat owners. Hint: use the DL Query tab.
+    DL Query : person and has_pet some (dog or cat)
+    Fred, Joe, Mick, Minnie
+################################################################################################################################
+7. Give a complete description of the instance Mick.
+    Mick is male and drives a white van 'Q123 ABC'
+    reads a tabloid : 'Daily Mirror'
+    has pet dog Rex
+    likes Rex
+    different than Dewey <http://owl.man.ac.uk/2006/07/sssw/people#Dewey>
+################################################################################################################################
+8. List all the subclasses of grownup. (Hint use the DL Query tab)
+    'bus driver'
+    'haulage truck driver'
+    'lorry driver'
+    'mad cow'
+    'old lady'
+    'van driver'
+    'white van man'
+    driver
+    man
+    owl:Nothing
+    woman
+################################################################################################################################
+9. The Daily Mirror is inferred to be a tabloid. Why?
+
+'white van man' is equivalent to intersection of 
+	class 'man' 
+        Mick is Male				(Mick Type Male)
+
+        Mick has pet Rex, hence he is a person 	(has_pet Domain is person)
+
+        Mick drives 'Q123 ABC'
+            'Q123 ABC' is a 'white thing'	('Q123 ABC' Type 'white thing')
+            'Q123 ABC' is a 'van' 		('Q123 ABC' Type van)
+            'Q123 ABC' is a 'vehicle'	(vehicle SubClass van)
+        Hence, Mick drives some vehicle
+
+        person and drives some vehicle is equivalent to driver
+        Hence, Mick is a driver
+        Mick is an adult			(driver subClassOf adult)
+        Therefore, Mick is a man 			(man is equivalent to 'adult', 'male' and 'person')
+	and 
+	a class which has restriction on its property 'drives' 
+		whose value are instances of a class 'van' and  'white thing'
+        
+        Mick drives 'Q123 ABC'
+        'Q123 ABC' is a 'white thing'	('Q123 ABC' Type 'white thing')
+        'Q123 ABC' is a 'van' 		('Q123 ABC' Type van)
+Hence Mick is a 'white van man'
+
+'white van man' is a subClass of a class which has restriction on its property 'reads' to be 'tabloid'
+
+Mick reads 'Daily Mirror'
+
+Hence 'Daily Mirror' is tabloid
+################################################################################################################################
+10. Do all the “pets” of an animal-lover need to be animals?
+
+    'animal lover' is equivalentTo person and (has_pet min 3 owl:Thing)
+        Walt has_pet Huey, Dewey, Louie
+    has_pet Range is animal
+
+    YES, all the “pets” of an animal-lover need to be animals
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

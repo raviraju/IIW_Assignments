@@ -1,0 +1,38 @@
+splitrows col: column1 on: '\n' quote: '\"'
+unnest col: column1 keys: 'ranking', 'reviewCount', 'url', '_type', '_cached_page_id', 'contact', 'things_to_do_in', 'address', '_template', 'place'
+drop col: column1
+extract col: ranking on: `{digit}+`
+rename col: ranking1 to: 'rank'
+extract col: reviewCount on: `{number}` after: `"` before: ` `
+rename col: reviewCount1 to: 'no_of_reviews'
+drop col: type
+drop col: cached_page_id
+drop col: ranking
+drop col: reviewCount
+delete row: matches([things_to_do_in], `null`)
+extract col: things_to_do_in after: `"` before: `"`
+rename col: things_to_do_in1 to: 'attraction_in'
+drop col: things_to_do_in
+drop col: template
+unnest col: place keys: '[0]'
+rename col: column_0 to: 'attraction'
+drop col: place
+unnest col: contact keys: '[0]'
+rename col: column_0 to: 'contact_no'
+drop col: contact
+unnest col: address keys: '[0]'
+rename col: column_0 to: 'address_info'
+drop col: address
+set col: contact_no value: 'Unknown' row: empty([contact_no])
+extract col: address_info on: `{alpha}+` after: `{delim-ws}` before: `{end}`
+rename col: address_info1 to: 'country'
+replace col: no_of_reviews with: '' on: `,`
+set col: no_of_reviews value: 0 row: empty([no_of_reviews])
+set col: country value: 'N\/A' row: empty([country])
+set col: attraction_in value: 'N\/A' row: empty([attraction_in])
+delete row: empty([rank])
+join with: no_of_attractions_per_location col: attraction_in = current_dataset.attraction_in, attraction_in1 = no_of_attractions_per_location.attraction_in, rank = current_dataset.rank, no_of_reviews = current_dataset.no_of_reviews, url = current_dataset.url, contact_no = current_dataset.contact_no, address_info = current_dataset.address_info, country = current_dataset.country, attraction = current_dataset.attraction, no_of_attractions = no_of_attractions_per_location.no_of_attractions row: current_dataset.attraction_in == no_of_attractions_per_location.attraction_in
+drop col: attraction_in1
+rename col: no_of_attractions to: 'no_of_attractions_per_location'
+join with: no_of_attractions_per_country col: country = current_dataset.country, country1 = no_of_attractions_per_country.country, attraction_in = current_dataset.attraction_in, rank = current_dataset.rank, no_of_reviews = current_dataset.no_of_reviews, url = current_dataset.url, contact_no = current_dataset.contact_no, address_info = current_dataset.address_info, attraction = current_dataset.attraction, no_of_attractions_per_location = current_dataset.no_of_attractions_per_location, no_of_attractions_in_country = no_of_attractions_per_country.no_of_attractions_in_country row: current_dataset.country == no_of_attractions_per_country.country
+drop col: country1

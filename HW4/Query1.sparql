@@ -1,0 +1,8 @@
+prefix dbo: <http://dbpedia.org/ontology/>
+select ?painter_name
+where {
+    ?painter_res rdf:type dbo:Painter;
+                 rdfs:label ?name1
+BIND(str(?name1) as ?painter_name)
+FILTER(langmatches(lang(?name1),"en"))
+}

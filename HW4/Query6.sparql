@@ -1,0 +1,16 @@
+SELECT ?name
+WHERE{
+{
+select ?name (COUNT(?instrument) as ?no_of_instruments)
+   WHERE{
+        ?res dbo:instrument ?instrument;
+                        rdfs:label ?name1
+        BIND(str(?name1) as ?name)
+        FILTER(langmatches(lang(?name1),"en"))
+        FILTER NOT EXISTS{?res dbo:instrument dbr:Guitar}
+   }
+group by ?name
+}
+FILTER(?no_of_instruments = 10)
+}
+order by asc(?name)

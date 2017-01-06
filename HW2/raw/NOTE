@@ -1,0 +1,6 @@
+Sources weren't downloaded explicity into a file, 
+urllib.request and BeautifulSoup libraries were used in extractText.py to fetch and parse html sources on the fly
+
+extractText.py is used to tag tokens from sources, tagged results shall be written to file : training
+
+ravirajukrishna@ubuntu:~/Desktop/IIW_HomeWorks$ python3 extractText.py
